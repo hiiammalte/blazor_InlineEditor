@@ -16,5 +16,5 @@ This project also includes a "InlineEditor" component, providing both a UI and l
 ## How the InlineEditor component works
 Internally this "InlineEditor" component provides a DataAnnotationValidator component and wraps all of its' content inside a EditForm tag. If a RenderFragment is provided as a ChildComponent, it will exists within the EditForm tag and can hence perform as an input within the webform.
 
-# Limitations
+## Limitations
 The EditContext provided to a EditForm will itself provide the model to the DataAnnotationValidator. This means that the validation is always performed against a model and not just against single properties within this model. This in return mean that you may need to provide the EditContext of the "InlineEditor" component with a new model, containing only a single property with DataAnnotations for validation, if there are more than one properties being validated against. If the model contains other properties that are not valid in the given state, the validation of the model will fail and the inline editor will not close and save the input.
