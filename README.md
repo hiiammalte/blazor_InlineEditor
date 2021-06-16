@@ -1,4 +1,4 @@
-# Blazor Inline Editor  - Custom ASP.NET Blazor InputBase for Inline Editing Forms using the EditForm component
+# Blazor Inline Editor  - Custom ASP.NET Blazor InputBase for inline editing using EditForm
 
 Microsofts recommended way of creating webforms with validation in Blazor is by using the feature-rich EditForm component bound to a model that uses data annotations. The EditForm component is part of the Blazor framework but does not provide the ability for inline editing out of the box. This project provides a solution to this missing feature.
 
