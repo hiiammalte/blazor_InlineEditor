@@ -1,0 +1,13 @@
+﻿.inline-editor {
+    min-height: 5rem;
+}
+
+.not-input-group {
+    padding: .375rem .75rem;
+    border: 1px solid transparent !important;
+}
+
+    .not-input-group:hover {
+        border-radius: .3rem !important;
+        border: 1px solid #dee2e6 !important
+    }

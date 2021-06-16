@@ -1,0 +1,86 @@
+﻿@page "/"
+
+@using blazor_inlineEditor.Components;
+@using blazor_inlineEditor.Components.InlineEditing;
+@using blazor_inlineEditor.Objects;
+
+<div class="container-md">
+    <div class="card">
+        <div class="card-header">
+            Blazor inline-editor with EditForm-Validation support.
+        </div>
+        <div class="card-body">
+            <div class="alert alert-primary" role="alert">
+                <h5>Instructions</h5>
+                <ol>
+                    <li>Click on one of the fields to open the inline-editor.</li>
+                    <li>Hit "Save" or press "Enter" to save your changes, or hit "Undo" to revert your changes.</li>
+                </ol>
+                 
+            </div>
+            <div class="row">
+                <div class="col">
+                        <InlineEditor Context="context" TInputType="string" Placeholder="Fullname..." Text="@user.Name" OnValidInput="UpdateName">
+                            <TextInput Placeholder="Fullname..." Id="username" @bind-Value="@user.Name" ValidationFor="@(() => user.Name)" />
+                        </InlineEditor>
+
+                        <InlineEditor Context="context" TInputType="string" Placeholder="Email address..." Text="@user.Email" OnValidInput="UpdateEmail">
+                            <EmailInput Placeholder="Email address..." Id="username" @bind-Value="@user.Email" ValidationFor="@(() => user.Email)" />
+                        </InlineEditor>
+
+                        <InlineEditor Context="context" TInputType="int" Placeholder="Height in cm..." Text="@user.HeightInCentimeters.ToString()" OnValidInput="UpdateHeightInCm">
+                            <NumberInput Placeholder="Height in cm..." Id="heightInCm" @bind-Value="@user.HeightInCentimeters" ValidationFor="@(() => user.HeightInCentimeters)" />
+                        </InlineEditor>
+
+                        <InlineEditor Context="context" TInputType="double" Placeholder="Height in meters..." Text="@user.HeightInMeters.ToString()" OnValidInput="UpdateHeightInM">
+                            <DecimalInput Placeholder="Height in meters..." Id="heightInM" @bind-Value="@user.HeightInMeters" ValidationFor="@(() => user.HeightInMeters)" />
+                        </InlineEditor>
+
+                        <InlineEditor Context="context" TInputType="DateTime" Placeholder="Height in meters..." Text="@user.Birthday.ToShortDateString()" OnValidInput="UpdateBirthday">
+                            <DateInput Placeholder="Height in meters..." Id="birthday" @bind-Value="@user.Birthday" ValidationFor="@(() => user.Birthday)" />
+                        </InlineEditor>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@code {
+    public User user { get; set; }
+    public EditContext context { get; set; }
+
+    protected override void OnInitialized()
+    {
+        //Object that might be fetched from an API
+        user = new User
+        {
+            Name = "Max",
+            Birthday = DateTime.Now.Date,
+            Gender = Gender.MALE,
+            Email = "email@max.de",
+            Password = "MaxPW!",
+            HeightInCentimeters = 180,
+            HeightInMeters = 1.8
+        };
+
+        context = new EditContext(user);
+    }
+
+    //Updating the fetched Object
+    private void UpdateName(string value)
+         => user.Name = value;
+
+    private void UpdateEmail(string value)
+         => user.Email = value;
+
+    private void UpdateHeightInCm(int value)
+         => user.HeightInCentimeters = value;
+
+    private void UpdateHeightInM(double value)
+        => user.HeightInMeters = value;
+
+    private void UpdateBirthday(DateTime value)
+       => user.Birthday = value;
+}

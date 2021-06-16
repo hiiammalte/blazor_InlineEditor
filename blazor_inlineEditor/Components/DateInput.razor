@@ -1,0 +1,18 @@
+﻿@using System.Linq.Expressions
+@using blazor_inlineEditor.Components.InlineEditing;
+
+@inherits InlineEditingInputBase<DateTime>
+
+<div class="d-flex flex-column w-100">
+    <input type="date" class="form-control @CssClass" id="@Id" @bind="@CurrentValue" format="@DateTimeFormat" placeholder="@(Placeholder ?? DateTimeFormat)" />
+    <ErrorMessage For="@ValidationFor" />
+</div>
+
+@code
+{
+    [Parameter] public string Placeholder { get; set; }
+    [Parameter] public string Id { get; set; }
+    [Parameter] public Expression<Func<DateTime>> ValidationFor { get; set; }
+    
+    protected override string DateTimeFormat { get; set; } = "yyyy-MM-dd";
+}

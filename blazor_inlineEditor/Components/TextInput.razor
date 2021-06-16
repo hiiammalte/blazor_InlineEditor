@@ -1,0 +1,16 @@
+﻿@using System.Linq.Expressions
+@using blazor_inlineEditor.Components.InlineEditing;
+
+@inherits InlineEditingInputBase<string>
+
+<div class="d-flex flex-column w-100">
+    <input type="text" class="form-control @CssClass" id="@Id" @bind="@CurrentValue" placeholder="@(Placeholder ?? "")" />
+    <ErrorMessage For="@ValidationFor" />
+</div>
+
+@code
+{
+    [Parameter] public string Placeholder { get; set; }
+    [Parameter] public string Id { get; set; }
+    [Parameter] public Expression<Func<string>> ValidationFor { get; set; }
+}

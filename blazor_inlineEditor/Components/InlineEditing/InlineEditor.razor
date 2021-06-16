@@ -1,0 +1,76 @@
+﻿@typeparam TInputType
+@inherits ComponentBase
+
+<EditForm EditContext="@Context" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit">
+    <DataAnnotationsValidator />
+
+    <div class="inline-editor">
+        @if (!IsInEditingMode)
+        {
+            <div @onclick="@ShowInlineEditor" class="not-input-group">
+                @(string.IsNullOrEmpty(Text) ? Placeholder : Text)
+            </div>
+        }
+        else
+        {
+            <div class="input-group">
+                <div class="d-flex flex-row w-100">
+                    <CascadingValue Value="this">
+                        @ChildContent
+                    </CascadingValue>
+                    <div class="d-flex flex-row">
+                        <button type="submit" class="btn btn-outline-secondary mb-auto" @onkeypress:preventDefault>Save</button>
+                        <button @onclick="@CancelInlineEditor" class="btn btn-outline-secondary mb-auto">Undo</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</EditForm>
+
+@code {
+    [Parameter] public EditContext Context { get; set; }
+
+    [Parameter] public string Placeholder { get; set; }
+    [Parameter] public string Text { get; set; }
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public EventCallback<TInputType> OnValidInput { get; set; }
+
+    private bool ShowEditMenu { get; set; } = false;
+    private bool IsInEditingMode { get; set; } = false;
+
+    private InlineEditingInputBase<TInputType> InputComponent { get; set; }
+
+    public void RegisterWithInlineEditingBase(InlineEditingInputBase<TInputType> inputComponent)
+    {
+        InputComponent = inputComponent;
+    }
+
+    private void OnMouseOver()
+        => ShowEditMenu = true;
+
+    private void OnMouseLeave()
+        => ShowEditMenu = false;
+
+    private void ShowInlineEditor()
+        => IsInEditingMode = true;
+
+    private void CancelInlineEditor()
+    {
+        InputComponent?.ResetInput();
+        IsInEditingMode = false;
+    }
+
+    protected async Task OnValidSubmit()
+    {
+        await OnValidInput.InvokeAsync(InputComponent.Value);
+        IsInEditingMode = false;
+    }
+
+    protected void OnInvalidSubmit()
+    {
+        Console.WriteLine("Invalid Submit");
+    }
+}
