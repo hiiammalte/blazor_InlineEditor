@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace blazor_inlineEditor.Objects
+namespace blazor_inlineEditor.Models
 {
     public class User
     {
