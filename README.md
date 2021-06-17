@@ -4,6 +4,8 @@ Microsofts recommended way of creating webforms with validation in Blazor is by 
 
 This project builds upon the InputBase class, a generic class from the Blazor framework, which should normally be inherited by all your custom input components. This project provides the "InlineEditingInputBase" class, a custom class acting as an intermediator between the InputBase class and your input components. To use the "InlineEditingInputBase" class, all you need to do is have your custom input components inherit from it instead of the InputBase class.
 
+![Inline Editor demo](https://github.com/hiiammalte/blazor_InlineEditor/blob/master/demo/InlineEditor.gif?raw=true "Demo of Inline Editor functionality")
+
 ## How it works
 
 After initialization, the generic "InlineEditingInputBase" class internally stores the initial input value of the inheriting input component as a reset value. The class also provides a function to reset the input to this inital value. Furthermore a bunch of boilerplate parsing functions, which are normally needed to be included in each of your custom input components, is included in this custom class.
@@ -15,7 +17,7 @@ blazor_inlineEditor/Components/InlineEditing/
 
 ## What's also included?
 
-This project also includes a "InlineEditor" component, providing both a UI and logic for your inline editor. Once you provide this "InlineEditor" component with a input component as a RenderFragment and an EditContext containing the model to be validated against, you are able to activate the inline editor by clicking on the initially displayed placeholder text. The component will then replace the placeholder text with the RenderFragments' input field. It will also display two buttons right next to it. One button is for saving the input (submitting the form and executing validation) and one is for resetting the changes made to the input value. If valid, both buttons will close the inline editor and display the possibly changed placeholder text. Otherwise a validation error message is displayed beneath the input field.
+This project also includes a "InlineEditor" component, providing both a UI and logic for your inline editor. Once you provide this "InlineEditor" component with a input component as a RenderFragment and an EditContext containing the model to be validated against, you are able to activate the inline editor by clicking on the initially displayed text. The component will then replace the text with the RenderFragments' input field. It will also display two buttons right next to it. One button is for saving the input (submitting the form and executing validation) and one is for resetting the changes made to the input value. If valid, both buttons will close the inline editor and display the possibly changed placeholder text. Otherwise a validation error message is displayed beneath the input field.
 
 Use the "InlineEditor" component like so:
 ```
@@ -147,7 +149,6 @@ public class User
 }
 
 //DON'T - use a model with more than one validatable property that might even fail validation by default
-
 public class User
 {
     [Required(ErrorMessage = "Please enter Name")]
